@@ -160,8 +160,12 @@ const BlindTimer = ({ onClose }) => {
   };
 
   const loadTurnier1 = () => {
+    // Clear any saved data first to ensure fresh Turnier 1
+    localStorage.removeItem('poker-blind-structure');
+    console.log('🔥 Cleared old structure, loading fresh Turnier 1');
+    
     const turnier1Levels = [
-      { small: 25, big: 50, ante: 0, duration: 12 }, // €25/€50 + 12 Min (korrekt laut Problem Statement)
+      { small: 25, big: 50, ante: 0, duration: 12 }, // €25/€50 + 12 Min Laut Problem Statement!
       { small: 50, big: 100, ante: 0, duration: 12 },
       { small: 75, big: 150, ante: 0, duration: 12 },
       { small: 100, big: 200, ante: 25, duration: 12 },
@@ -171,6 +175,7 @@ const BlindTimer = ({ onClose }) => {
       { small: 400, big: 800, ante: 100, duration: 12 }
     ];
     
+    console.log('🎯 Setting Turnier 1 levels:', turnier1Levels);
     setBlindLevels(turnier1Levels);
     setCurrentLevel(0);
     setTimeLeft(turnier1Levels[0].duration * 60); // 12 Minuten = 720 Sekunden
@@ -179,7 +184,7 @@ const BlindTimer = ({ onClose }) => {
     
     toast({
       title: "Turnier 1 geladen",
-      description: "Ihre Turnier 1 Struktur (12 Min/Level) wurde geladen.",
+      description: "€25/€50 Struktur mit 12 Min/Level geladen!",
       className: "bg-green-800 border-green-500/30 text-white"
     });
   };
