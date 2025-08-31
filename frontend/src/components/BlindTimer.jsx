@@ -176,11 +176,16 @@ const BlindTimer = ({ onClose }) => {
     ];
     
     console.log('🎯 Setting Turnier 1 levels:', turnier1Levels);
-    setBlindLevels(turnier1Levels);
+    console.log('🎯 First level should be:', turnier1Levels[0]);
+    
+    // Force state updates in correct order
+    setIsRunning(false);
     setCurrentLevel(0);
+    setBlindLevels(turnier1Levels);
     setTimeLeft(turnier1Levels[0].duration * 60); // 12 Minuten = 720 Sekunden
     setStructureName('Turnier 1');
-    setIsRunning(false);
+    
+    console.log('✅ Turnier 1 state updated');
     
     toast({
       title: "Turnier 1 geladen",
