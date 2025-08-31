@@ -73,8 +73,10 @@ const BlindTimer = ({ onClose }) => {
   const loadSavedStructure = () => {
     try {
       const saved = localStorage.getItem('poker-blind-structure');
+      console.log('Loading saved structure:', saved);
       if (saved) {
         const data = JSON.parse(saved);
+        console.log('✅ Parsed data:', data);
         setBlindLevels(data.levels || blindLevels);
         setStructureName(data.name || 'Meine Blindstruktur');
         toast({
@@ -82,9 +84,22 @@ const BlindTimer = ({ onClose }) => {
           description: `"${data.name || 'Gespeicherte Struktur'}" wurde geladen.`,
           className: "bg-blue-800 border-blue-500/30 text-white"
         });
+      } else {
+        console.log('No saved structure found');
+        toast({
+          title: "Keine gespeicherte Struktur",
+          description: "Keine gespeicherte Blindstruktur gefunden.",
+          className: "bg-yellow-800 border-yellow-500/30 text-white"
+        });
       }
     } catch (error) {
-      console.error('Error loading blind structure:', error);
+      console.error('❌ Error loading blind structure:', error);
+      toast({
+        title: "Fehler beim Laden",
+        description: "Die Blindstruktur konnte nicht geladen werden.",
+        variant: "destructive",
+        className: "bg-red-800 border-red-500/30 text-white"
+      });
     }
   };
 
