@@ -463,6 +463,7 @@ const BlindTimer = ({ onClose }) => {
           </CardContent>
         </Card>
       </div>
+      <Toaster />
     </div>
   );
 };
