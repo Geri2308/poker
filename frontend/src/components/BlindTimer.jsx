@@ -89,12 +89,7 @@ const BlindTimer = ({ onClose }) => {
       }
     } catch (error) {
       console.error('❌ Error loading blind structure:', error);
-      toast({
-        title: "Fehler beim Laden",
-        description: "Die Blindstruktur konnte nicht geladen werden.",
-        variant: "destructive",
-        className: "bg-red-800 border-red-500/30 text-white"
-      });
+      toast.error("Die Blindstruktur konnte nicht geladen werden.");
     }
   };
 
