@@ -31,6 +31,8 @@ const BlindTimer = ({ onClose }) => {
   useEffect(() => {
     console.log('🔥 Component mounted - clearing old cache');
     localStorage.removeItem('poker-blind-structure');
+    // Test toast system on mount
+    toast.success('Blind Timer gestartet! 🎯');
     // Don't auto-load saved structure to avoid cache issues
   }, []);
 
