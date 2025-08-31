@@ -82,11 +82,7 @@ const BlindTimer = ({ onClose }) => {
         console.log('✅ Parsed data:', data);
         setBlindLevels(data.levels || blindLevels);
         setStructureName(data.name || 'Meine Blindstruktur');
-        toast({
-          title: "Struktur geladen",
-          description: `"${data.name || 'Gespeicherte Struktur'}" wurde geladen.`,
-          className: "bg-blue-800 border-blue-500/30 text-white"
-        });
+        toast.success(`Struktur geladen: "${data.name || 'Gespeicherte Struktur'}"`);
       } else {
         console.log('No saved structure found');
         toast({
