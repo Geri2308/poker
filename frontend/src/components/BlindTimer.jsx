@@ -55,11 +55,7 @@ const BlindTimer = ({ onClose }) => {
             } else {
               // Tournament finished
               setIsRunning(false);
-              toast({
-                title: "Turnier beendet!",
-                description: "Alle Blind-Level wurden durchlaufen.",
-                className: "bg-green-800 border-green-500/30 text-white"
-              });
+              toast.success("Turnier beendet! Alle Blind-Level wurden durchlaufen.");
               return 0;
             }
           }
