@@ -27,9 +27,12 @@ const BlindTimer = ({ onClose }) => {
 
   const intervalRef = useRef(null);
 
-  // Load saved blind structure on mount
+  // Load saved blind structure on mount - but don't override defaults if empty
   useEffect(() => {
-    loadSavedStructure();
+    const saved = localStorage.getItem('poker-blind-structure');
+    if (saved) {
+      loadSavedStructure();
+    }
   }, []);
 
   // Initialize timer with first level
