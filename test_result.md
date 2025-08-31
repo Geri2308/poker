@@ -101,3 +101,149 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Test the complete Poker-Ranking backend API with endpoints for health check, CRUD operations on persons, bulk updates, and reset functionality. Verify initial data, sorting, error handling, and data persistence."
+
+backend:
+  - task: "Health Check Endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "GET /api/ endpoint working correctly, returns proper API status message"
+
+  - task: "Get All Persons Endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "GET /api/persons endpoint working correctly, returns all persons sorted by amount (highest first), includes all 10 default persons with correct names and IDs"
+
+  - task: "Get Person By ID Endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "GET /api/persons/{id} endpoint working correctly, returns correct person data with all required fields, properly handles invalid IDs with 404 response"
+
+  - task: "Update Person Amount Endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "PUT /api/persons/{id} endpoint working correctly, updates person amounts properly, handles invalid IDs with 404 response"
+
+  - task: "Bulk Update Persons Endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "Initial test failed due to route ordering issue - bulk endpoint was being matched by individual person endpoint"
+      - working: true
+        agent: "testing"
+        comment: "Fixed route ordering by moving bulk endpoint before parameterized endpoint. PUT /api/persons/bulk now works correctly, updates multiple persons and returns all persons sorted by amount"
+
+  - task: "Create Person Endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "POST /api/persons endpoint working correctly, creates new persons with proper data structure and UUID generation"
+
+  - task: "Reset All Amounts Endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "POST /api/persons/reset endpoint working correctly, resets all person amounts to 0.0 and returns updated list"
+
+  - task: "Data Persistence"
+    implemented: true
+    working: true
+    file: "/app/backend/database.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Data persistence working correctly, updates are maintained between operations and database queries"
+
+  - task: "Sorting by Amount"
+    implemented: true
+    working: true
+    file: "/app/backend/database.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Sorting functionality working correctly, persons are returned sorted by amount in descending order (highest first)"
+
+  - task: "Default Data Initialization"
+    implemented: true
+    working: true
+    file: "/app/backend/database.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Default data initialization working correctly, creates 10 default persons (Geri, Sepp, Toni, Geri Ranner, Manuel, Rene, Gabi, Roland, Stefan, Richi) with IDs 1-10 and amounts 0.0"
+
+frontend:
+  # No frontend testing performed as per instructions
+
+metadata:
+  created_by: "testing_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "All backend endpoints tested and verified"
+  stuck_tasks: []
+  test_all: true
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "testing"
+    message: "Comprehensive backend API testing completed successfully. All 12 test scenarios passed including health check, CRUD operations, bulk updates, sorting, error handling, and data persistence. Fixed one critical route ordering issue in bulk update endpoint. The Poker Ranking API is fully functional and ready for production use."

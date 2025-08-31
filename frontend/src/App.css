@@ -1,3 +1,8 @@
+/* Entferne die Standard-Zentrierung */
+.App {
+  /* Keine text-align: center hier - das stört den natürlichen Lesefluss */
+}
+
 .App-logo {
     height: 40vmin;
     pointer-events: none;
@@ -31,4 +36,22 @@
     to {
         transform: rotate(360deg);
     }
+}
+
+/* Scrollbar Styling für bessere Optik */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #52525b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #facc15;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #eab308;
 }
