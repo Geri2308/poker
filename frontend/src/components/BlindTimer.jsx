@@ -15,14 +15,14 @@ const BlindTimer = ({ onClose }) => {
   // Using sonner toast system for better reliability
   
   const [blindLevels, setBlindLevels] = useState([
-    { small: 25, big: 50, ante: 0, duration: 20 }, // 20 Minuten
-    { small: 50, big: 100, ante: 0, duration: 20 },
-    { small: 75, big: 150, ante: 0, duration: 20 },
+    { small: 10, big: 20, ante: 0, duration: 20 }, // Default Levels (not Turnier 1)
+    { small: 20, big: 40, ante: 0, duration: 20 },
+    { small: 30, big: 60, ante: 0, duration: 20 },
+    { small: 50, big: 100, ante: 10, duration: 20 },
+    { small: 75, big: 150, ante: 15, duration: 20 },
     { small: 100, big: 200, ante: 25, duration: 20 },
-    { small: 150, big: 300, ante: 25, duration: 20 },
-    { small: 200, big: 400, ante: 50, duration: 20 },
-    { small: 300, big: 600, ante: 75, duration: 20 },
-    { small: 400, big: 800, ante: 100, duration: 20 }
+    { small: 150, big: 300, ante: 50, duration: 20 },
+    { small: 200, big: 400, ante: 75, duration: 20 }
   ]);
 
   const intervalRef = useRef(null);
