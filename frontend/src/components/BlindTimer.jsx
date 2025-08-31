@@ -108,12 +108,7 @@ const BlindTimer = ({ onClose }) => {
       toast.success(`Blindstruktur "${structureName}" wurde erfolgreich gespeichert!`);
     } catch (error) {
       console.error('❌ Error saving blind structure:', error);
-      toast({
-        title: "Fehler beim Speichern",
-        description: "Die Blindstruktur konnte nicht gespeichert werden.",
-        variant: "destructive",
-        className: "bg-red-800 border-red-500/30 text-white"
-      });
+      toast.error("Die Blindstruktur konnte nicht gespeichert werden.");
     }
   };
 
