@@ -12,7 +12,7 @@ const BlindTimer = ({ onClose }) => {
   const [isRunning, setIsRunning] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [structureName, setStructureName] = useState('Meine Blindstruktur');
-  const { toast } = useToast();
+  // Using sonner toast system for better reliability
   
   const [blindLevels, setBlindLevels] = useState([
     { small: 25, big: 50, ante: 0, duration: 20 }, // 20 Minuten
