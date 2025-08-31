@@ -85,11 +85,7 @@ const BlindTimer = ({ onClose }) => {
         toast.success(`Struktur geladen: "${data.name || 'Gespeicherte Struktur'}"`);
       } else {
         console.log('No saved structure found');
-        toast({
-          title: "Keine gespeicherte Struktur",
-          description: "Keine gespeicherte Blindstruktur gefunden.",
-          className: "bg-yellow-800 border-yellow-500/30 text-white"
-        });
+        toast.warning("Keine gespeicherte Blindstruktur gefunden.");
       }
     } catch (error) {
       console.error('❌ Error loading blind structure:', error);
