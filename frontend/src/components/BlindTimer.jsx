@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Play, Pause, Square, Plus, Trash2, Clock, Settings, Save, Upload } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
+import { Toaster } from './ui/toaster';
 
 const BlindTimer = ({ onClose }) => {
   const [currentLevel, setCurrentLevel] = useState(0);
