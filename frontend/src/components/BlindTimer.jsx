@@ -130,11 +130,7 @@ const BlindTimer = ({ onClose }) => {
     setStructureName('Standard Struktur');
     setIsRunning(false);
     
-    toast({
-      title: "Standard wiederhergestellt",
-      description: "Die Standard-Blindstruktur wurde geladen.",
-      className: "bg-blue-800 border-blue-500/30 text-white"
-    });
+    toast.success("Die Standard-Blindstruktur wurde geladen.");
   };
 
   const loadTurnier1 = () => {
