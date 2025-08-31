@@ -158,7 +158,7 @@ const BlindTimer = ({ onClose }) => {
 
   const loadTurnier1 = () => {
     const turnier1Levels = [
-      { small: 25, big: 50, ante: 0, duration: 12 }, // Korrigiert: €25/€50 + 12 Min
+      { small: 25, big: 50, ante: 0, duration: 12 }, // €25/€50 + 12 Min (korrekt laut Problem Statement)
       { small: 50, big: 100, ante: 0, duration: 12 },
       { small: 75, big: 150, ante: 0, duration: 12 },
       { small: 100, big: 200, ante: 25, duration: 12 },
