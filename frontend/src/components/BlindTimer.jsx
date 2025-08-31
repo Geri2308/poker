@@ -161,11 +161,7 @@ const BlindTimer = ({ onClose }) => {
     
     console.log('✅ Turnier 1 state updated');
     
-    toast({
-      title: "Turnier 1 geladen",
-      description: "€25/€50 Struktur mit 12 Min/Level geladen!",
-      className: "bg-green-800 border-green-500/30 text-white"
-    });
+    toast.success("Turnier 1 geladen! €25/€50 Struktur mit 12 Min/Level");
   };
 
   const formatTime = (seconds) => {
