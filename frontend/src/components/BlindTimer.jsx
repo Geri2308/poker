@@ -105,11 +105,7 @@ const BlindTimer = ({ onClose }) => {
       localStorage.setItem('poker-blind-structure', JSON.stringify(structureData));
       console.log('✅ Blind structure saved successfully');
       
-      toast({
-        title: "Gespeichert!",
-        description: `Blindstruktur "${structureName}" wurde erfolgreich gespeichert.`,
-        className: "bg-green-800 border-green-500/30 text-white"
-      });
+      toast.success(`Blindstruktur "${structureName}" wurde erfolgreich gespeichert!`);
     } catch (error) {
       console.error('❌ Error saving blind structure:', error);
       toast({
