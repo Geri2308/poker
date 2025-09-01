@@ -66,6 +66,20 @@ const AdminLogin = ({ onAdminLogin, onViewerMode }) => {
       }}
     >
       <div className="w-full max-w-md space-y-4">
+        {/* Casino Poker Table Button */}
+        <div className="text-center">
+          <Button
+            onClick={() => setShowPokerTable(true)}
+            className="bg-red-600 hover:bg-red-500 text-white font-medium px-6 py-3 text-lg shadow-lg mb-3"
+          >
+            <Star className="mr-2 h-5 w-5" />
+            Casino Poker
+          </Button>
+          <p className="text-gray-300 text-sm mt-1 mb-4">
+            Spielen Sie Texas Hold'em gegen andere Spieler
+          </p>
+        </div>
+
         {/* Blind Timer Button */}
         <div className="text-center">
           <Button
