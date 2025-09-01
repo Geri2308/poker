@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
-import { Lock, Eye, EyeOff, Clock } from 'lucide-react';
+import { Lock, Eye, EyeOff, Clock, Star } from 'lucide-react';
 import BlindTimer from './BlindTimer';
+import PokerTable from './PokerTable';
 
 const AdminLogin = ({ onAdminLogin, onViewerMode }) => {
   const [code, setCode] = useState('');
