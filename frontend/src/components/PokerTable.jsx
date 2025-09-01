@@ -413,6 +413,30 @@ const PokerTable = ({ onClose, currentUser }) => {
               // Player selection screen
               <div className="text-center space-y-4">
                 <h3 className="text-white text-xl">Choose Your Player</h3>
+                
+                {/* Show Game ID for sharing */}
+                {showGameId && (
+                  <div className="bg-gray-800 rounded-lg p-4 mb-4">
+                    <h4 className="text-yellow-400 text-lg font-bold mb-2">🎯 Game Created!</h4>
+                    <p className="text-white text-sm mb-2">Share this Game ID with other players:</p>
+                    <div className="bg-black rounded p-3 font-mono text-yellow-400 text-lg">
+                      {gameId}
+                    </div>
+                    <p className="text-gray-400 text-xs mt-2">
+                      Other players can use "Join Existing Game" with this ID
+                    </p>
+                    <Button
+                      onClick={() => {
+                        navigator.clipboard.writeText(gameId);
+                        toast.success('Game ID copied to clipboard! 📋');
+                      }}
+                      className="mt-2 bg-green-600 hover:bg-green-500 text-white text-sm"
+                    >
+                      Copy Game ID
+                    </Button>
+                  </div>
+                )}
+                
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                   {KNOWN_PLAYERS.map(player => (
                     <Button
