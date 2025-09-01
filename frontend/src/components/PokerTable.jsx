@@ -357,6 +357,16 @@ const PokerTable = ({ onClose, currentUser }) => {
                 <span>Casino Poker Table</span>
               </CardTitle>
               <div className="flex space-x-2">
+                {selectedPlayer && gameId && (
+                  <Button
+                    onClick={leaveGame}
+                    disabled={loading}
+                    variant="outline"
+                    className="border-red-500 text-red-400 hover:bg-red-900/30"
+                  >
+                    Leave Table
+                  </Button>
+                )}
                 <Button
                   onClick={onClose}
                   variant="outline"
