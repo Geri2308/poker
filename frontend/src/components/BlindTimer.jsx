@@ -133,9 +133,8 @@ const BlindTimer = ({ onClose }) => {
   };
 
   const loadTurnier1 = () => {
-    // Clear any saved data first to ensure fresh Turnier 1
-    localStorage.removeItem('poker-blind-structure');
-    console.log('🔥 Cleared old structure, loading fresh Turnier 1');
+    // Don't clear localStorage - keep user data!
+    console.log('🎯 Loading Turnier 1 without clearing user data');
     
     const turnier1Levels = [
       { small: 25, big: 50, ante: 0, duration: 12 }, // €25/€50 + 12 Min Laut Problem Statement!
