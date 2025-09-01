@@ -52,7 +52,8 @@ const AdminLogin = ({ onAdminLogin, onViewerMode }) => {
   }
 
   if (showPokerTable) {
-    return <PokerTable onClose={() => setShowPokerTable(false)} />;
+    // return <PokerTable onClose={() => setShowPokerTable(false)} />;
+    return <div className="text-white text-center p-8">🎰 Casino Poker Table coming soon!</div>;
   }
 
   return (
