@@ -174,10 +174,16 @@ async def start_next_hand(game_id: str) -> GameStateResponse:
 @poker_router.get("/games/lobby")
 async def get_game_lobby() -> Dict[str, Any]:
     """Get list of available games for lobby"""
+    # Cleanup empty and inactive games first
+    empty_removed = cleanup_empty_games()
+    inactive_removed = cleanup_inactive_games()
+    
     lobby_games = []
     
     for game_id, game in active_games.items():
-        if len(game.players) < 8 and game.phase in [GamePhase.WAITING, GamePhase.PRE_FLOP, GamePhase.FLOP, GamePhase.TURN, GamePhase.RIVER]:
+        # Only show games with players and in active phases
+        if (len(game.players) > 0 and len(game.players) < 8 and 
+            game.phase in [GamePhase.WAITING, GamePhase.PRE_FLOP, GamePhase.FLOP, GamePhase.TURN, GamePhase.RIVER]):
             lobby_games.append({
                 "game_id": game_id,
                 "players_count": len(game.players),
@@ -188,9 +194,15 @@ async def get_game_lobby() -> Dict[str, Any]:
                 "created_at": game.created_at.isoformat() if game.created_at else None
             })
     
+    logger.info(f"Lobby cleanup: {empty_removed} empty games, {inactive_removed} inactive games removed")
+    
     return {
         "games": lobby_games,
-        "total_games": len(lobby_games)
+        "total_games": len(lobby_games),
+        "cleanup_stats": {
+            "empty_games_removed": empty_removed,
+            "inactive_games_removed": inactive_removed
+        }
     }
 
 
