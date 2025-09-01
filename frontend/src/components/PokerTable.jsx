@@ -253,6 +253,30 @@ const PokerTable = ({ onClose, currentUser }) => {
     }
   };
 
+  const fetchAvailableGames = async () => {
+    try {
+      const response = await axios.get(`${API}/poker/games/lobby`);
+      setAvailableGames(response.data.games || []);
+    } catch (error) {
+      console.error('Error fetching games:', error);
+    }
+  };
+
+  const joinGameFromLobby = (gameId) => {
+    setGameId(gameId);
+    setShowLobby(false);
+    toast.success('Joining game from lobby! 🎯');
+  };
+
+  // Fetch available games when showing lobby
+  useEffect(() => {
+    if (showLobby) {
+      fetchAvailableGames();
+      const interval = setInterval(fetchAvailableGames, 5000); // Refresh every 5 seconds
+      return () => clearInterval(interval);
+    }
+  }, [showLobby]);
+
   const joinGame = async (playerName) => {
     if (!gameId) return;
     
