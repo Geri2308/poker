@@ -42,12 +42,7 @@ function App() {
       setPersons(loadedPersons);
     } catch (error) {
       console.error('Error loading persons:', error);
-      toast({
-        title: "Fehler beim Laden",
-        description: "Daten konnten nicht geladen werden. Fallback zu lokalen Daten.",
-        variant: "destructive",
-        className: "bg-red-800 border-red-500/30 text-white"
-      });
+      toast.error("Fehler beim Laden: Daten konnten nicht geladen werden. Fallback zu lokalen Daten.");
     } finally {
       setLoading(false);
     }
