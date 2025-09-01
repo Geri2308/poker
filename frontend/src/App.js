@@ -9,8 +9,8 @@ import { personService } from "./data/mock";
 import { useAuth } from "./hooks/useAuth";
 import { Button } from "./components/ui/button";
 import { Save, RefreshCw } from "lucide-react";
-import { useToast } from "./hooks/use-toast";
-import { Toaster } from "./components/ui/toaster";
+import { toast } from 'sonner';
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
   const [persons, setPersons] = useState([]);
