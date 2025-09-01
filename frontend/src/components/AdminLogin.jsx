@@ -51,6 +51,10 @@ const AdminLogin = ({ onAdminLogin, onViewerMode }) => {
     return <BlindTimer onClose={() => setShowBlindTimer(false)} />;
   }
 
+  if (showPokerTable) {
+    return <PokerTable onClose={() => setShowPokerTable(false)} />;
+  }
+
   return (
     <div 
       className="min-h-screen flex items-center justify-center px-4" 
