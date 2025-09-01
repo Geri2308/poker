@@ -312,6 +312,29 @@ const PokerTable = ({ onClose, currentUser }) => {
     }
   };
 
+  const leaveGame = async () => {
+    if (!gameId || !selectedPlayer) return;
+    
+    setLoading(true);
+    try {
+      await axios.post(`${API}/poker/game/${gameId}/leave?player_name=${selectedPlayer}`);
+      
+      // Reset state and go back to lobby
+      setGameId(null);
+      setSelectedPlayer('');
+      setGameState(null);
+      setAvailableActions(null);
+      setShowGameId(false);
+      
+      toast.success('Left the table successfully! 👋');
+    } catch (error) {
+      console.error('Error leaving game:', error);
+      toast.error(error.response?.data?.detail || 'Failed to leave game');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const currentPlayerData = gameState?.players_info?.find(p => p.name === selectedPlayer);
   const isCurrentTurn = gameState?.current_player_name === selectedPlayer && gameState?.phase !== 'waiting' && gameState?.phase !== 'finished';
 
