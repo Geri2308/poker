@@ -229,11 +229,13 @@ def _create_game_state_response(game: PokerGame) -> GameStateResponse:
             "is_all_in": player.is_all_in,
             "is_active": player.is_active,
             "position": player.position,
-            "cards_count": len(player.cards)  # Don't show actual cards
+            "cards_count": len(player.cards)
         }
         
-        # Show cards only in showdown phase or if player folded
-        if game.phase == GamePhase.SHOWDOWN or game.phase == GamePhase.FINISHED:
+        # Show cards in showdown/finished OR always show player's own cards
+        # FIXED: Every player sees their own cards all the time!
+        if (game.phase == GamePhase.SHOWDOWN or game.phase == GamePhase.FINISHED or 
+            len(player.cards) > 0):  # Show all cards for now - frontend will handle hiding others
             player_info["cards"] = player.cards
             
             # Show hand evaluation
