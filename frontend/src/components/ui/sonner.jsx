@@ -11,7 +11,7 @@ const Toaster = ({
       closeButton
       duration={5000}
       style={{
-        zIndex: 10000,
+        zIndex: 99999,
       }}
       toastOptions={{
         style: {
