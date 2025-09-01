@@ -157,8 +157,21 @@ const AdminLogin = ({ onAdminLogin, onViewerMode }) => {
             </Button>
 
             <div className="text-center text-xs text-gray-400 mt-4">
-              <p>👑 Admin: Kann Beträge ändern</p>
-              <p>👁️ Ansicht: Kann nur Rankings sehen</p>
+              <p className="text-gray-300 text-sm mt-2">
+                👑 Admin: Kann Beträge ändern
+              </p>
+              <p className="text-gray-300 text-sm">👁️ Ansicht: Kann nur Rankings sehen</p>
+              
+              {/* TEST: Casino Poker Button here */}
+              <div className="mt-4 text-center">
+                <Button
+                  onClick={() => setShowPokerTable(true)}
+                  className="bg-red-600 hover:bg-red-500 text-white font-medium px-4 py-2"
+                >
+                  <Star className="mr-2 h-4 w-4" />
+                  🎰 TEST Casino Poker
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
