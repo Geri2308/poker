@@ -340,17 +340,45 @@ const PokerTable = ({ onClose, currentUser }) => {
           <CardContent className="p-6">
             {!gameId ? (
               // Game creation screen
-              <div className="text-center space-y-4">
+              <div className="text-center space-y-6">
                 <h3 className="text-white text-xl">Welcome to Casino Poker</h3>
                 <p className="text-gray-300">Texas Hold'em • 8 Players Max • Fun Chips</p>
-                <Button 
-                  onClick={createGame} 
-                  disabled={loading}
-                  className="bg-green-600 hover:bg-green-500 text-white px-8 py-3"
-                >
-                  <Play className="mr-2 h-4 w-4" />
-                  Create New Game
-                </Button>
+                
+                {/* Create New Game */}
+                <div className="space-y-3">
+                  <Button 
+                    onClick={createGame} 
+                    disabled={loading}
+                    className="bg-green-600 hover:bg-green-500 text-white px-8 py-3 w-full"
+                  >
+                    <Play className="mr-2 h-4 w-4" />
+                    Create New Game
+                  </Button>
+                </div>
+                
+                {/* Join Existing Game */}
+                <div className="border-t border-gray-600 pt-6">
+                  <h4 className="text-white text-lg mb-3">Join Existing Game</h4>
+                  <div className="flex space-x-2">
+                    <Input
+                      type="text"
+                      placeholder="Enter Game ID"
+                      value={joinGameId}
+                      onChange={(e) => setJoinGameId(e.target.value)}
+                      className="bg-black/50 border-gray-500 text-white flex-1"
+                    />
+                    <Button 
+                      onClick={() => joinExistingGame(joinGameId)} 
+                      disabled={loading || !joinGameId.trim()}
+                      className="bg-blue-600 hover:bg-blue-500 text-white px-6"
+                    >
+                      Join Game
+                    </Button>
+                  </div>
+                  <p className="text-gray-400 text-sm mt-2">
+                    Ask another player for their Game ID to join their table
+                  </p>
+                </div>
               </div>
             ) : !selectedPlayer ? (
               // Player selection screen
