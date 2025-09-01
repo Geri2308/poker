@@ -327,12 +327,154 @@ class PokerRankingAPITester:
             self.log_test("Data Persistence", False, f"Exception: {str(e)}")
         return False
     
+    def test_poker_game_creation(self):
+        """Test POST /api/poker/game/create - Create new poker game"""
+        try:
+            response = self.session.post(f"{API_URL}/poker/game/create")
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                if "game_id" not in data:
+                    self.log_test("Poker Game Creation", False, "No game_id in response")
+                    return False
+                
+                self.game_id = data["game_id"]
+                self.log_test("Poker Game Creation", True, f"Created game with ID: {self.game_id}")
+                return self.game_id
+            else:
+                self.log_test("Poker Game Creation", False, f"Status code: {response.status_code}", response.text)
+        except Exception as e:
+            self.log_test("Poker Game Creation", False, f"Exception: {str(e)}")
+        return False
+    
+    def test_poker_player_join(self):
+        """Test POST /api/poker/game/{game_id}/join - Players join game"""
+        if not hasattr(self, 'game_id') or not self.game_id:
+            self.log_test("Poker Player Join", False, "No game_id available")
+            return False
+            
+        try:
+            # Test joining with known players
+            known_players = ["Geri", "Sepp", "Toni"]
+            self.player_ids = {}
+            
+            for player in known_players:
+                response = self.session.post(f"{API_URL}/poker/game/{self.game_id}/join", 
+                                           params={"player_name": player})
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    
+                    # Find player ID in response
+                    for player_info in data.get('players_info', []):
+                        if player_info['name'] == player:
+                            self.player_ids[player] = player_info['id']
+                            break
+                    
+                    self.log_test(f"Poker Player Join ({player})", True, f"{player} joined successfully")
+                else:
+                    self.log_test(f"Poker Player Join ({player})", False, f"Status code: {response.status_code}", response.text)
+                    return False
+            
+            return len(self.player_ids) >= 2
+        except Exception as e:
+            self.log_test("Poker Player Join", False, f"Exception: {str(e)}")
+        return False
+    
+    def test_poker_game_state(self):
+        """Test GET /api/poker/game/{game_id}/state - Get game state"""
+        if not hasattr(self, 'game_id') or not self.game_id:
+            self.log_test("Poker Game State", False, "No game_id available")
+            return False
+            
+        try:
+            response = self.session.get(f"{API_URL}/poker/game/{self.game_id}/state")
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                required_fields = ["phase", "pot", "community_cards", "players_info"]
+                missing_fields = [field for field in required_fields if field not in data]
+                if missing_fields:
+                    self.log_test("Poker Game State", False, f"Missing fields: {missing_fields}")
+                    return False
+                
+                self.log_test("Poker Game State", True, 
+                             f"Phase: {data['phase']}, Players: {len(data['players_info'])}, Pot: {data['pot']}")
+                return data
+            else:
+                self.log_test("Poker Game State", False, f"Status code: {response.status_code}", response.text)
+        except Exception as e:
+            self.log_test("Poker Game State", False, f"Exception: {str(e)}")
+        return False
+    
+    def test_poker_available_actions(self):
+        """Test GET /api/poker/game/{game_id}/available-actions/{player_id}"""
+        if not hasattr(self, 'game_id') or not self.game_id or not hasattr(self, 'player_ids'):
+            self.log_test("Poker Available Actions", False, "No game_id or player_ids available")
+            return False
+            
+        try:
+            # Test for first player
+            first_player = list(self.player_ids.keys())[0]
+            player_id = self.player_ids[first_player]
+            
+            response = self.session.get(f"{API_URL}/poker/game/{self.game_id}/available-actions/{player_id}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                required_fields = ["actions", "can_act"]
+                missing_fields = [field for field in required_fields if field not in data]
+                if missing_fields:
+                    self.log_test("Poker Available Actions", False, f"Missing fields: {missing_fields}")
+                    return False
+                
+                self.log_test("Poker Available Actions", True, 
+                             f"Can act: {data['can_act']}, Actions: {data['actions']}")
+                return data
+            else:
+                self.log_test("Poker Available Actions", False, f"Status code: {response.status_code}", response.text)
+        except Exception as e:
+            self.log_test("Poker Available Actions", False, f"Exception: {str(e)}")
+        return False
+    
+    def test_poker_invalid_scenarios(self):
+        """Test invalid poker scenarios"""
+        try:
+            # Test joining with invalid player name
+            if hasattr(self, 'game_id') and self.game_id:
+                response = self.session.post(f"{API_URL}/poker/game/{self.game_id}/join", 
+                                           params={"player_name": "InvalidPlayer"})
+                
+                if response.status_code == 400:
+                    self.log_test("Poker Invalid Player", True, "Correctly rejected invalid player")
+                else:
+                    self.log_test("Poker Invalid Player", False, f"Expected 400, got {response.status_code}")
+            
+            # Test getting state for non-existent game
+            response = self.session.get(f"{API_URL}/poker/game/invalid-game-id/state")
+            
+            if response.status_code == 404:
+                self.log_test("Poker Invalid Game", True, "Correctly returned 404 for invalid game")
+                return True
+            else:
+                self.log_test("Poker Invalid Game", False, f"Expected 404, got {response.status_code}")
+        except Exception as e:
+            self.log_test("Poker Invalid Scenarios", False, f"Exception: {str(e)}")
+        return False
+
     def run_all_tests(self):
         """Run comprehensive test suite"""
         print("=" * 60)
-        print("POKER RANKING API - COMPREHENSIVE TEST SUITE")
+        print("POKER RANKING & CASINO POKER API - COMPREHENSIVE TEST SUITE")
         print("=" * 60)
         print()
+        
+        # PERSONS API TESTS
+        print("🎯 TESTING PERSONS API")
+        print("-" * 30)
         
         # Test 1: Health Check
         self.test_health_check()
@@ -375,8 +517,27 @@ class PokerRankingAPITester:
             self.log_test("Final State Verification", all_zero, 
                          "All amounts are 0.0 after reset" if all_zero else "Some amounts are not 0.0 after reset")
         
+        # POKER API TESTS
+        print("\n🎰 TESTING CASINO POKER API")
+        print("-" * 30)
+        
+        # Test 13: Create poker game
+        self.test_poker_game_creation()
+        
+        # Test 14: Players join game
+        self.test_poker_player_join()
+        
+        # Test 15: Get game state
+        self.test_poker_game_state()
+        
+        # Test 16: Get available actions
+        self.test_poker_available_actions()
+        
+        # Test 17: Invalid scenarios
+        self.test_poker_invalid_scenarios()
+        
         # Summary
-        print("=" * 60)
+        print("\n" + "=" * 60)
         print("TEST SUMMARY")
         print("=" * 60)
         
@@ -389,7 +550,7 @@ class PokerRankingAPITester:
         print(f"Success Rate: {(passed/total)*100:.1f}%")
         
         if passed == total:
-            print("\n🎉 ALL TESTS PASSED! The Poker Ranking API is working correctly.")
+            print("\n🎉 ALL TESTS PASSED! Both Poker Ranking and Casino Poker APIs are working correctly.")
         else:
             print(f"\n⚠️  {total - passed} tests failed. Please check the issues above.")
             
