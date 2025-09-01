@@ -56,16 +56,16 @@ const PlayerPosition = ({ player, position, isCurrentPlayer, onPlayerAction, ava
   const [raiseAmount, setRaiseAmount] = useState(0);
   const [showActions, setShowActions] = useState(false);
 
-  // Position styles for 8-player table
+  // Optimized position styles for 8-player table (no overlaps)
   const positionStyles = {
-    0: 'absolute bottom-2 left-1/2 transform -translate-x-1/2', // Bottom center
-    1: 'absolute bottom-8 left-8', // Bottom left
-    2: 'absolute left-2 top-1/2 transform -translate-y-1/2', // Left center
-    3: 'absolute top-8 left-8', // Top left
-    4: 'absolute top-2 left-1/2 transform -translate-x-1/2', // Top center
-    5: 'absolute top-8 right-8', // Top right
-    6: 'absolute right-2 top-1/2 transform -translate-y-1/2', // Right center
-    7: 'absolute bottom-8 right-8' // Bottom right
+    0: 'absolute bottom-4 left-1/2 transform -translate-x-1/2', // Bottom center (current user)
+    1: 'absolute bottom-16 left-12', // Bottom left
+    2: 'absolute left-4 top-1/2 transform -translate-y-1/2', // Left center
+    3: 'absolute top-16 left-12', // Top left
+    4: 'absolute top-4 left-1/2 transform -translate-x-1/2', // Top center
+    5: 'absolute top-16 right-12', // Top right
+    6: 'absolute right-4 top-1/2 transform -translate-y-1/2', // Right center
+    7: 'absolute bottom-16 right-12' // Bottom right
   };
 
   const handleAction = (action, amount = 0) => {
