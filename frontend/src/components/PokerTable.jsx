@@ -412,28 +412,111 @@ const PokerTable = ({ onClose, currentUser }) => {
                   </Button>
                 </div>
                 
-                {/* Join Existing Game */}
+                {/* Join Options */}
                 <div className="border-t border-gray-600 pt-6">
-                  <h4 className="text-white text-lg mb-3">Join Existing Game</h4>
-                  <div className="flex space-x-2">
-                    <Input
-                      type="text"
-                      placeholder="Enter Game ID"
-                      value={joinGameId}
-                      onChange={(e) => setJoinGameId(e.target.value)}
-                      className="bg-black/50 border-gray-500 text-white flex-1"
-                    />
-                    <Button 
-                      onClick={() => joinExistingGame(joinGameId)} 
-                      disabled={loading || !joinGameId.trim()}
-                      className="bg-blue-600 hover:bg-blue-500 text-white px-6"
-                    >
-                      Join Game
-                    </Button>
-                  </div>
-                  <p className="text-gray-400 text-sm mt-2">
-                    Ask another player for their Game ID to join their table
-                  </p>
+                  {!showLobby ? (
+                    <>
+                      <h4 className="text-white text-lg mb-3">Join Existing Game</h4>
+                      
+                      {/* Browse Games Button */}
+                      <div className="mb-4">
+                        <Button 
+                          onClick={() => setShowLobby(true)} 
+                          disabled={loading}
+                          className="w-full bg-purple-600 hover:bg-purple-500 text-white"
+                        >
+                          <Users className="mr-2 h-4 w-4" />
+                          Browse Open Tables
+                        </Button>
+                        <p className="text-gray-400 text-xs mt-1 text-center">
+                          See all available games and join instantly
+                        </p>
+                      </div>
+
+                      {/* Manual Game ID Entry */}
+                      <div className="border-t border-gray-700 pt-4">
+                        <p className="text-gray-300 text-sm mb-2">Or enter Game ID manually:</p>
+                        <div className="flex space-x-2">
+                          <Input
+                            type="text"
+                            placeholder="Enter Game ID"
+                            value={joinGameId}
+                            onChange={(e) => setJoinGameId(e.target.value)}
+                            className="bg-black/50 border-gray-500 text-white flex-1"
+                          />
+                          <Button 
+                            onClick={() => joinExistingGame(joinGameId)} 
+                            disabled={loading || !joinGameId.trim()}
+                            className="bg-blue-600 hover:bg-blue-500 text-white px-6"
+                          >
+                            Join Game
+                          </Button>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    /* Game Lobby */
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="text-white text-lg">Open Tables ({availableGames.length})</h4>
+                        <Button 
+                          onClick={() => setShowLobby(false)} 
+                          variant="outline"
+                          size="sm"
+                          className="border-gray-500 text-gray-300"
+                        >
+                          Back
+                        </Button>
+                      </div>
+
+                      {availableGames.length === 0 ? (
+                        <div className="text-center py-8">
+                          <p className="text-gray-400">No open tables available</p>
+                          <p className="text-gray-500 text-sm mt-1">Create a new game to get started!</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-3 max-h-60 overflow-y-auto">
+                          {availableGames.map((game, idx) => (
+                            <div key={game.game_id} className="bg-gray-800 rounded-lg p-3 border border-gray-600">
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <div className="flex items-center space-x-2">
+                                    <Badge 
+                                      variant="outline" 
+                                      className={`text-xs ${
+                                        game.phase === 'waiting' ? 'text-green-400 border-green-400' : 'text-yellow-400 border-yellow-400'
+                                      }`}
+                                    >
+                                      {game.phase}
+                                    </Badge>
+                                    <span className="text-white text-sm">
+                                      {game.players_count}/{game.max_players} Players
+                                    </span>
+                                  </div>
+                                  <div className="text-gray-400 text-xs mt-1">
+                                    Players: {game.players.join(', ')}
+                                  </div>
+                                  {game.pot > 0 && (
+                                    <div className="text-yellow-400 text-xs">
+                                      Pot: ${game.pot}
+                                    </div>
+                                  )}
+                                </div>
+                                <Button 
+                                  size="sm"
+                                  onClick={() => joinGameFromLobby(game.game_id)}
+                                  className="bg-green-600 hover:bg-green-500 text-white"
+                                  disabled={game.players_count >= game.max_players}
+                                >
+                                  Join
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             ) : !selectedPlayer ? (
