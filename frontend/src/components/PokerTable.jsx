@@ -260,6 +260,11 @@ const PokerTable = ({ onClose, currentUser }) => {
       if (playerData) {
         const response = await axios.get(`${API}/poker/game/${gameId}/available-actions/${playerData.id}`);
         setAvailableActions(response.data);
+        
+        // Initialize raise amount to minimum raise
+        if (response.data.min_raise && raiseAmount === 0) {
+          setRaiseAmount(response.data.min_raise);
+        }
       }
     } catch (error) {
       console.error('Error fetching available actions:', error);
