@@ -12,6 +12,7 @@ const AdminLogin = ({ onAdminLogin, onViewerMode }) => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showBlindTimer, setShowBlindTimer] = useState(false);
+  const [showPokerTable, setShowPokerTable] = useState(false);
 
   // Admin-Code (ändern Sie diesen nach Ihren Wünschen)
   const ADMIN_CODE = '2112'; // Sie können das zu jedem 4-stelligen Code ändern
