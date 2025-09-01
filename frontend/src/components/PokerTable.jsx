@@ -159,6 +159,17 @@ const PokerTable = ({ onClose, currentUser }) => {
     }
   }, [gameId, selectedPlayer, autoRefresh]);
 
+  // Cleanup when component unmounts or user closes
+  useEffect(() => {
+    return () => {
+      // Auto-leave game when closing poker table
+      if (gameId && selectedPlayer) {
+        axios.post(`${API}/poker/game/${gameId}/leave?player_name=${selectedPlayer}`)
+          .catch(error => console.log('Cleanup leave game error:', error));
+      }
+    };
+  }, [gameId, selectedPlayer]);
+
   const createGame = async () => {
     setLoading(true);
     try {
