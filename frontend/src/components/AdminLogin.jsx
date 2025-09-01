@@ -88,7 +88,7 @@ const AdminLogin = ({ onAdminLogin, onViewerMode }) => {
             className="bg-yellow-600 hover:bg-yellow-500 text-black font-medium px-6 py-3 text-lg shadow-lg"
           >
             <Clock className="mr-2 h-5 w-5" />
-            Blind Timer
+            🎰 CASINO + Blind Timer
           </Button>
           <p className="text-gray-300 text-sm mt-2">
             Verwalten Sie Ihre Poker-Turnier Blindstufen
