@@ -53,8 +53,6 @@ const PokerCard = ({ card, isHidden = false }) => {
 };
 
 const PlayerPosition = ({ player, position, isCurrentPlayer, onPlayerAction, availableActions, gamePhase, isCurrentUser = false }) => {
-  const [raiseAmount, setRaiseAmount] = useState(0);
-  const [showActions, setShowActions] = useState(false);
 
   // Optimized position styles for 8-player table (no overlaps)
   const positionStyles = {
