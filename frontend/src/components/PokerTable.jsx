@@ -121,59 +121,12 @@ const PlayerPosition = ({ player, position, isCurrentPlayer, onPlayerAction, ava
           </div>
         )}
 
-        {/* Action buttons for current user */}
-        {isCurrentPlayer && isCurrentUser && availableActions && availableActions.can_act && (
+        {/* Current Turn Indicator */}
+        {isCurrentPlayer && isCurrentUser && (
           <div className="mt-2">
-            {!showActions ? (
-              <Button 
-                size="sm" 
-                className="w-full text-xs bg-green-600 hover:bg-green-500"
-                onClick={() => setShowActions(true)}
-              >
-                Your Turn
-              </Button>
-            ) : (
-              <div className="space-y-1">
-                <div className="flex gap-1">
-                  {availableActions.actions.includes('check') && (
-                    <Button size="sm" variant="outline" className="text-xs flex-1" onClick={() => handleAction('check')}>
-                      Check
-                    </Button>
-                  )}
-                  {availableActions.actions.includes('call') && (
-                    <Button size="sm" className="text-xs flex-1 bg-blue-600 hover:bg-blue-500" onClick={() => handleAction('call')}>
-                      Call ${availableActions.call_amount}
-                    </Button>
-                  )}
-                </div>
-                <div className="flex gap-1">
-                  {availableActions.actions.includes('raise') && (
-                    <div className="flex gap-1 w-full">
-                      <Input
-                        type="number"
-                        placeholder="Amount"
-                        value={raiseAmount}
-                        onChange={(e) => setRaiseAmount(parseInt(e.target.value) || 0)}
-                        className="text-xs h-6 w-16"
-                        min={availableActions.min_raise}
-                        max={availableActions.max_bet}
-                      />
-                      <Button 
-                        size="sm" 
-                        className="text-xs bg-red-600 hover:bg-red-500"
-                        onClick={() => handleAction('raise', raiseAmount)}
-                        disabled={raiseAmount < availableActions.min_raise}
-                      >
-                        Raise
-                      </Button>
-                    </div>
-                  )}
-                  <Button size="sm" variant="destructive" className="text-xs" onClick={() => handleAction('fold')}>
-                    Fold
-                  </Button>
-                </div>
-              </div>
-            )}
+            <Badge className="w-full text-xs bg-green-600 text-white justify-center">
+              Your Turn
+            </Badge>
           </div>
         )}
       </div>
