@@ -142,6 +142,29 @@ async def start_next_hand(game_id: str) -> GameStateResponse:
     return _create_game_state_response(game)
 
 
+@poker_router.get("/games/lobby")
+async def get_game_lobby() -> Dict[str, Any]:
+    """Get list of available games for lobby"""
+    lobby_games = []
+    
+    for game_id, game in active_games.items():
+        if len(game.players) < 8 and game.phase in [GamePhase.WAITING, GamePhase.PRE_FLOP, GamePhase.FLOP, GamePhase.TURN, GamePhase.RIVER]:
+            lobby_games.append({
+                "game_id": game_id,
+                "players_count": len(game.players),
+                "max_players": 8,
+                "phase": game.phase,
+                "players": [p.name for p in game.players],
+                "pot": game.pot,
+                "created_at": game.created_at.isoformat() if game.created_at else None
+            })
+    
+    return {
+        "games": lobby_games,
+        "total_games": len(lobby_games)
+    }
+
+
 @poker_router.get("/game/{game_id}/available-actions/{player_id}")
 async def get_available_actions(game_id: str, player_id: str) -> Dict[str, Any]:
     """Get available actions for a player"""
