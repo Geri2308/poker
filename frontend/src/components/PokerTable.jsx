@@ -534,6 +534,121 @@ const PokerTable = ({ onClose, currentUser }) => {
                   </div>
                 )}
 
+                {/* Action Panel - Bottom Right */}
+                {currentPlayerData && isCurrentTurn && availableActions?.can_act && (
+                  <div className="absolute bottom-4 right-4 bg-gray-900/95 rounded-lg p-4 border-2 border-yellow-400 shadow-2xl min-w-[280px]">
+                    <h4 className="text-yellow-400 font-bold mb-3 text-center">Your Turn</h4>
+                    
+                    {/* Quick Actions Row */}
+                    <div className="flex gap-2 mb-3">
+                      {availableActions.actions.includes('fold') && (
+                        <Button 
+                          size="sm" 
+                          variant="destructive" 
+                          className="flex-1 bg-red-600 hover:bg-red-500"
+                          onClick={() => handlePlayerAction(currentPlayerData.id, 'fold')}
+                        >
+                          Fold
+                        </Button>
+                      )}
+                      {availableActions.actions.includes('check') && (
+                        <Button 
+                          size="sm" 
+                          className="flex-1 bg-gray-600 hover:bg-gray-500"
+                          onClick={() => handlePlayerAction(currentPlayerData.id, 'check')}
+                        >
+                          Check
+                        </Button>
+                      )}
+                      {availableActions.actions.includes('call') && (
+                        <Button 
+                          size="sm" 
+                          className="flex-1 bg-blue-600 hover:bg-blue-500"
+                          onClick={() => handlePlayerAction(currentPlayerData.id, 'call')}
+                        >
+                          Call ${availableActions.call_amount}
+                        </Button>
+                      )}
+                    </div>
+
+                    {/* Raise Section with Slider */}
+                    {availableActions.actions.includes('raise') && (
+                      <div className="space-y-3">
+                        <div className="text-white text-sm">
+                          <div className="flex justify-between">
+                            <span>Raise Amount:</span>
+                            <span className="text-yellow-400 font-bold">${raiseAmount}</span>
+                          </div>
+                        </div>
+                        
+                        {/* Raise Slider */}
+                        <div className="space-y-2">
+                          <input
+                            type="range"
+                            min={availableActions.min_raise || gameState?.current_bet * 2}
+                            max={Math.min(availableActions.max_bet || currentPlayerData.chips, currentPlayerData.chips + currentPlayerData.current_bet)}
+                            value={raiseAmount}
+                            onChange={(e) => setRaiseAmount(parseInt(e.target.value))}
+                            className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
+                            style={{
+                              background: `linear-gradient(to right, #fbbf24 0%, #fbbf24 ${((raiseAmount - (availableActions.min_raise || gameState?.current_bet * 2)) / ((Math.min(availableActions.max_bet || currentPlayerData.chips, currentPlayerData.chips + currentPlayerData.current_bet)) - (availableActions.min_raise || gameState?.current_bet * 2))) * 100}%, #374151 ${((raiseAmount - (availableActions.min_raise || gameState?.current_bet * 2)) / ((Math.min(availableActions.max_bet || currentPlayerData.chips, currentPlayerData.chips + currentPlayerData.current_bet)) - (availableActions.min_raise || gameState?.current_bet * 2))) * 100}%, #374151 100%)`
+                            }}
+                          />
+                          <div className="flex justify-between text-xs text-gray-400">
+                            <span>Min: ${availableActions.min_raise}</span>
+                            <span>Max: ${Math.min(availableActions.max_bet || currentPlayerData.chips, currentPlayerData.chips + currentPlayerData.current_bet)}</span>
+                          </div>
+                        </div>
+
+                        {/* Raise Button */}
+                        <Button 
+                          className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2"
+                          onClick={() => handlePlayerAction(currentPlayerData.id, 'raise', raiseAmount)}
+                          disabled={raiseAmount < (availableActions.min_raise || gameState?.current_bet * 2)}
+                        >
+                          Raise to ${raiseAmount}
+                        </Button>
+
+                        {/* Quick Bet Buttons */}
+                        <div className="flex gap-1">
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="flex-1 text-xs border-gray-500 text-gray-300 hover:bg-gray-700"
+                            onClick={() => setRaiseAmount(availableActions.min_raise || gameState?.current_bet * 2)}
+                          >
+                            Min
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="flex-1 text-xs border-gray-500 text-gray-300 hover:bg-gray-700"
+                            onClick={() => setRaiseAmount(Math.floor(gameState?.pot * 0.75) || gameState?.current_bet * 3)}
+                          >
+                            3/4 Pot
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="flex-1 text-xs border-gray-500 text-gray-300 hover:bg-gray-700"
+                            onClick={() => setRaiseAmount(gameState?.pot || gameState?.current_bet * 4)}
+                          >
+                            Pot
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="flex-1 text-xs border-gray-500 text-gray-300 hover:bg-gray-700"
+                            onClick={() => setRaiseAmount(Math.min(availableActions.max_bet || currentPlayerData.chips, currentPlayerData.chips + currentPlayerData.current_bet))}
+                          >
+                            All-In
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {/* Current player info */}
                 {currentPlayerData && (
                   <div className="bg-gray-800 rounded-lg p-4">
