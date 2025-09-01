@@ -26,13 +26,16 @@ const BlindTimer = ({ onClose }) => {
 
   const intervalRef = useRef(null);
 
-  // Clear any old cached data on mount - this fixes the €30 bug!
+  // Load saved structure on mount (but don't clear cache!)
   useEffect(() => {
-    console.log('🔥 Component mounted - clearing old cache');
-    localStorage.removeItem('poker-blind-structure');
+    console.log('🔥 Component mounted');
     // Test toast system on mount
     toast.success('Blind Timer gestartet! 🎯');
-    // Don't auto-load saved structure to avoid cache issues
+    // Load saved structure if it exists
+    const saved = localStorage.getItem('poker-blind-structure');
+    if (saved) {
+      loadSavedStructure();
+    }
   }, []);
 
   // Initialize timer with first level
