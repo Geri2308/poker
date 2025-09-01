@@ -95,12 +95,12 @@ const PlayerPosition = ({ player, position, isCurrentPlayer, onPlayerAction, ava
         <div className="flex justify-center gap-1 mb-2">
           {player.cards && player.cards.length > 0 ? (
             player.cards.map((card, idx) => (
-              <PokerCard key={idx} card={card} isHidden={!isCurrentUser && gamePhase !== 'showdown'} />
+              <PokerCard key={idx} card={card} isHidden={!isCurrentUser && gamePhase !== 'showdown' && gamePhase !== 'finished'} />
             ))
           ) : (
             <>
-              <PokerCard isHidden={true} />
-              <PokerCard isHidden={true} />
+              <PokerCard isHidden={!isCurrentUser} />
+              <PokerCard isHidden={!isCurrentUser} />
             </>
           )}
         </div>
