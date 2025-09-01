@@ -188,6 +188,8 @@ const PokerTable = ({ onClose, currentUser }) => {
   const [loading, setLoading] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState('');
   const [autoRefresh, setAutoRefresh] = useState(true);
+  const [joinGameId, setJoinGameId] = useState('');
+  const [showGameId, setShowGameId] = useState(false);
 
   // KNOWN_PLAYERS from backend
   const KNOWN_PLAYERS = [
