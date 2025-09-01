@@ -86,11 +86,7 @@ function App() {
     try {
       const resetPersons = await personService.resetAllAmounts();
       setPersons(resetPersons);
-      toast({
-        title: "Zurückgesetzt!",
-        description: "Alle Beträge wurden auf 0 zurückgesetzt.",
-        className: "bg-gray-800 border-yellow-500/30 text-yellow-500"
-      });
+      toast.success("Zurückgesetzt! Alle Beträge wurden auf 0 zurückgesetzt.");
     } catch (error) {
       console.error('Error resetting amounts:', error);
       toast({
