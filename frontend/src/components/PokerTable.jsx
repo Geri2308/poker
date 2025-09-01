@@ -66,11 +66,7 @@ const PlayerPosition = ({ player, position, isCurrentPlayer, onPlayerAction, ava
     7: 'absolute bottom-16 right-12' // Bottom right
   };
 
-  const handleAction = (action, amount = 0) => {
-    onPlayerAction(player.id, action, amount);
-    setShowActions(false);
-    setRaiseAmount(0);
-  };
+
 
   return (
     <div className={`${positionStyles[position]} w-32`}>
