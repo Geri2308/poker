@@ -228,7 +228,7 @@ const BlindTimer = ({ onClose }) => {
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-40 flex items-center justify-center p-4"
       style={{
         backgroundImage: 'url(/poker-background.jpg)',
         backgroundSize: 'cover',
