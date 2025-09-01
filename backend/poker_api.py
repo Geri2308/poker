@@ -239,6 +239,41 @@ async def get_available_actions(game_id: str, player_id: str) -> Dict[str, Any]:
     }
 
 
+def cleanup_empty_games():
+    """Remove games with no players from active_games"""
+    games_to_remove = []
+    
+    for game_id, game in active_games.items():
+        if len(game.players) == 0:
+            games_to_remove.append(game_id)
+            logger.info(f"Removing empty game: {game_id}")
+    
+    for game_id in games_to_remove:
+        del active_games[game_id]
+    
+    return len(games_to_remove)
+
+
+def cleanup_inactive_games():
+    """Remove games that have been inactive for too long"""
+    from datetime import datetime, timedelta
+    
+    games_to_remove = []
+    cutoff_time = datetime.utcnow() - timedelta(hours=2)  # Remove games older than 2 hours
+    
+    for game_id, game in active_games.items():
+        # Remove if no players OR game is very old
+        if (len(game.players) == 0 or 
+            (game.created_at and game.created_at < cutoff_time)):
+            games_to_remove.append(game_id)
+            logger.info(f"Removing inactive game: {game_id}")
+    
+    for game_id in games_to_remove:
+        del active_games[game_id]
+    
+    return len(games_to_remove)
+
+
 def _create_game_state_response(game: PokerGame) -> GameStateResponse:
     """Create a sanitized game state response"""
     current_player_name = ""
