@@ -719,6 +719,19 @@ const PokerTable = ({ onClose, currentUser }) => {
                   </div>
                 )}
 
+                {/* Fallback Action Panel für Testing - wenn es Spieler gibt aber Actions nicht funktionieren */}
+                {currentPlayerData && !isCurrentTurn && gameState?.phase !== 'waiting' && gameState?.phase !== 'finished' && (
+                  <div className="absolute bottom-4 right-4 bg-gray-800/95 rounded-lg p-3 border border-gray-500 text-white text-sm">
+                    <div>Waiting for turn...</div>
+                    <div className="text-xs text-gray-400">
+                      Current: {gameState?.current_player_name || 'None'}
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      Phase: {gameState?.phase}
+                    </div>
+                  </div>
+                )}
+
                 {/* Current player info */}
                 {currentPlayerData && (
                   <div className="bg-gray-800 rounded-lg p-4">
