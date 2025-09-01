@@ -597,6 +597,14 @@ const PokerTable = ({ onClose, currentUser }) => {
                 )}
 
                 {/* Action Panel - Bottom Right */}
+                {console.log('Action Panel Debug:', {
+                  currentPlayerData: !!currentPlayerData,
+                  isCurrentTurn,
+                  canAct: availableActions?.can_act,
+                  gamePhase: gameState?.phase,
+                  currentPlayerName: gameState?.current_player_name,
+                  selectedPlayer
+                })}
                 {currentPlayerData && isCurrentTurn && availableActions?.can_act && (
                   <div className="absolute bottom-4 right-4 bg-gray-900/95 rounded-lg p-4 border-2 border-yellow-400 shadow-2xl min-w-[280px]">
                     <h4 className="text-yellow-400 font-bold mb-3 text-center">Your Turn</h4>
