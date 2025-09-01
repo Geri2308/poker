@@ -132,8 +132,9 @@ async def reset_all_amounts():
         raise HTTPException(status_code=500, detail="Error resetting amounts")
 
 
-# Include the router in the main app
+# Include the routers in the main app
 app.include_router(api_router)
+app.include_router(poker_router)
 
 
 @app.on_event("shutdown")
