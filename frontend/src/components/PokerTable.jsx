@@ -455,14 +455,24 @@ const PokerTable = ({ onClose, currentUser }) => {
                     <div>
                       <div className="flex items-center justify-between mb-4">
                         <h4 className="text-white text-lg">Open Tables ({availableGames.length})</h4>
-                        <Button 
-                          onClick={() => setShowLobby(false)} 
-                          variant="outline"
-                          size="sm"
-                          className="border-gray-500 text-gray-300"
-                        >
-                          Back
-                        </Button>
+                        <div className="flex items-center space-x-2">
+                          <Button 
+                            onClick={fetchAvailableGames}
+                            size="sm"
+                            variant="outline"
+                            className="border-blue-500 text-blue-400 hover:bg-blue-900/30"
+                          >
+                            🔄 Refresh
+                          </Button>
+                          <Button 
+                            onClick={() => setShowLobby(false)} 
+                            variant="outline"
+                            size="sm"
+                            className="border-gray-500 text-gray-300"
+                          >
+                            Back
+                          </Button>
+                        </div>
                       </div>
 
                       {availableGames.length === 0 ? (
