@@ -73,12 +73,7 @@ function App() {
       toast.success("Gespeichert! Alle Beträge wurden erfolgreich gespeichert.");
     } catch (error) {
       console.error('Error saving persons:', error);
-      toast({
-        title: "Speicherfehler",
-        description: "Daten konnten nicht gespeichert werden.",
-        variant: "destructive",
-        className: "bg-red-800 border-red-500/30 text-white"
-      });
+      toast.error("Speicherfehler: Daten konnten nicht gespeichert werden.");
     } finally {
       setSaving(false);
     }
