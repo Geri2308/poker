@@ -214,10 +214,37 @@ const PokerTable = ({ onClose, currentUser }) => {
     try {
       const response = await axios.post(`${API}/poker/game/create`);
       setGameId(response.data.game_id);
-      toast.success('Poker game created! 🎰');
+      setShowGameId(true);
+      toast.success('Poker game created! Share the Game ID with other players! 🎰');
     } catch (error) {
       console.error('Error creating game:', error);
       toast.error('Failed to create game');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const joinExistingGame = async (gameId) => {
+    if (!gameId || !gameId.trim()) {
+      toast.error('Please enter a valid Game ID');
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      // First check if game exists by trying to get its state
+      const stateResponse = await axios.get(`${API}/poker/game/${gameId.trim()}/state`);
+      if (stateResponse.status === 200) {
+        setGameId(gameId.trim());
+        toast.success('Found game! Choose your player to join. 🎯');
+      }
+    } catch (error) {
+      console.error('Error joining game:', error);
+      if (error.response?.status === 404) {
+        toast.error('Game not found! Check the Game ID and try again.');
+      } else {
+        toast.error('Failed to join game');
+      }
     } finally {
       setLoading(false);
     }
