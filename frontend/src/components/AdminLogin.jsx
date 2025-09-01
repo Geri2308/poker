@@ -4,7 +4,7 @@ import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Lock, Eye, EyeOff, Clock, Star } from 'lucide-react';
 import BlindTimer from './BlindTimer';
-import PokerTable from './PokerTable';
+// import PokerTable from './PokerTable'; // Temporarily disabled
 
 const AdminLogin = ({ onAdminLogin, onViewerMode }) => {
   const [code, setCode] = useState('');
