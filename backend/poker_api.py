@@ -115,6 +115,35 @@ async def player_action(game_id: str, action: PokerAction) -> GameStateResponse:
     return _create_game_state_response(game)
 
 
+@poker_router.post("/game/{game_id}/leave")
+async def leave_game(game_id: str, player_name: str) -> Dict[str, str]:
+    """Player leaves a poker game"""
+    if game_id not in active_games:
+        raise HTTPException(status_code=404, detail="Game not found")
+    
+    game = active_games[game_id]
+    
+    # Find and remove player
+    player_to_remove = None
+    for player in game.players:
+        if player.name == player_name:
+            player_to_remove = player
+            break
+    
+    if not player_to_remove:
+        raise HTTPException(status_code=404, detail="Player not found in game")
+    
+    # Remove player from game
+    game.players.remove(player_to_remove)
+    
+    logger.info(f"Player {player_name} left game {game_id}")
+    
+    # Cleanup empty games
+    cleanup_empty_games()
+    
+    return {"message": f"Player {player_name} left the game"}
+
+
 @poker_router.post("/game/{game_id}/next-hand")
 async def start_next_hand(game_id: str) -> GameStateResponse:
     """Start the next hand"""
