@@ -467,6 +467,16 @@ const PokerTable = ({ onClose, currentUser }) => {
                       <Users className="h-4 w-4" />
                       <span>{gameState?.players_info?.length || 0}/8 Players</span>
                     </div>
+                    <div className="flex items-center space-x-2 cursor-pointer" 
+                         onClick={() => {
+                           navigator.clipboard.writeText(gameId);
+                           toast.success('Game ID copied! Share with friends! 📋');
+                         }}
+                         title="Click to copy Game ID">
+                      <Badge variant="outline" className="text-yellow-400 border-yellow-400 hover:bg-yellow-400/10">
+                        ID: {gameId?.substring(0, 8)}...
+                      </Badge>
+                    </div>
                   </div>
                   <div className="space-x-2">
                     {gameState?.phase === 'finished' && (
