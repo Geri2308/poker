@@ -143,7 +143,7 @@ async def start_next_hand(game_id: str) -> GameStateResponse:
 
 
 @poker_router.get("/game/{game_id}/available-actions/{player_id}")
-async def get_available_actions(game_id: str, player_id: str) -> Dict[str, any]:
+async def get_available_actions(game_id: str, player_id: str) -> Dict[str, Any]:
     """Get available actions for a player"""
     if game_id not in active_games:
         raise HTTPException(status_code=404, detail="Game not found")
