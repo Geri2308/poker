@@ -313,7 +313,7 @@ const PokerTable = ({ onClose, currentUser }) => {
   };
 
   const currentPlayerData = gameState?.players_info?.find(p => p.name === selectedPlayer);
-  const isCurrentTurn = gameState?.current_player_name === selectedPlayer;
+  const isCurrentTurn = gameState?.current_player_name === selectedPlayer && gameState?.phase !== 'waiting' && gameState?.phase !== 'finished';
 
   return (
     <div 
