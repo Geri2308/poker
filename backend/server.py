@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 
 from models import Person, PersonCreate, PersonUpdate, PersonBulkUpdateRequest
 from database import PersonDatabase
+from poker_api import poker_router
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
