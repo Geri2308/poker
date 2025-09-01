@@ -70,11 +70,7 @@ function App() {
     try {
       const updatedPersons = await personService.savePersons(persons);
       setPersons(updatedPersons);
-      toast({
-        title: "Gespeichert!",
-        description: "Alle Beträge wurden erfolgreich gespeichert.",
-        className: "bg-gray-800 border-yellow-500/30 text-yellow-500"
-      });
+      toast.success("Gespeichert! Alle Beträge wurden erfolgreich gespeichert.");
     } catch (error) {
       console.error('Error saving persons:', error);
       toast({
