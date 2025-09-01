@@ -16,7 +16,7 @@ function App() {
   const [persons, setPersons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const { toast } = useToast();
+  // Using Sonner toast system
   const { isAdmin, isLoading: authLoading, loginAsAdmin, loginAsViewer, logout, extendSession } = useAuth();
 
   useEffect(() => {
