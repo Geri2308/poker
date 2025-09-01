@@ -89,12 +89,7 @@ function App() {
       toast.success("Zurückgesetzt! Alle Beträge wurden auf 0 zurückgesetzt.");
     } catch (error) {
       console.error('Error resetting amounts:', error);
-      toast({
-        title: "Reset-Fehler",
-        description: "Beträge konnten nicht zurückgesetzt werden.",
-        variant: "destructive",
-        className: "bg-red-800 border-red-500/30 text-white"
-      });
+      toast.error("Reset-Fehler: Beträge konnten nicht zurückgesetzt werden.");
     } finally {
       setSaving(false);
     }
